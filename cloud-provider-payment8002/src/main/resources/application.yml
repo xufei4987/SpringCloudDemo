@@ -1,0 +1,32 @@
+server:
+  port: 8002
+  servlet:
+    context-path: /provider
+
+spring:
+  application:
+    name: cloud-payment-provider
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.15.130:33306/db2020?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: 111111
+
+# MyBatis
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.youxu.springcloud.entities
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/*.xml
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+#      defaultZone: http://127.0.0.1:7001/eureka
+      defaultZone: http://eureka01.com:7001/eureka,http://eureka02.com:7002/eureka
+  instance:
+    instance-id: payment8002
+    #显示服务的ip
+    prefer-ip-address: true
