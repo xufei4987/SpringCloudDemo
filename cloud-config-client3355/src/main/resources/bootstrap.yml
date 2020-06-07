@@ -1,0 +1,23 @@
+server:
+  port: 3355
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      label: master
+      name: config
+      profile: prod
+      uri: http://localhost:3344
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka01.com:7001/eureka,http://eureka02.com:7002/eureka
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

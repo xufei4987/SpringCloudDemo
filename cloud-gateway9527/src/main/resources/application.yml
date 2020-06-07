@@ -1,0 +1,38 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: payment_router1
+          #uri: http://localhost:8001
+          uri: lb://cloud-payment-provider
+          predicates:
+            - Path=/provider/payment/get/**
+            - After=2020-06-04T21:41:03.926+08:00[Asia/Shanghai]
+            - Before=2020-06-04T22:41:03.926+08:00[Asia/Shanghai]
+            - Between=2020-06-04T21:41:03.926+08:00[Asia/Shanghai],2020-06-04T22:41:03.926+08:00[Asia/Shanghai]
+
+        - id: payment_router2
+          #uri: http://localhost:8001
+          uri: lb://cloud-payment-provider
+          predicates:
+            - Path=/provider/payment/lb/**
+#            - Cookie=username,youxu #key,value
+#            - Header=X-Request-Id,\d+ #head头中需要有X-Request-Id值为正整数的
+#            - Method=GET
+#            - Query=age,\d+ #请求参数
+      discovery:
+        locator:
+          enabled: true #开启动态路由，通过微服务名进行路由
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka01.com:7001/eureka,http://eureka02.com:7002/eureka
+  instance:
+    instance-id: cloud-gateway9527
+    prefer-ip-address: true
